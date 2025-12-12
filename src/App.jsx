@@ -1,9 +1,9 @@
+import AppRouter from "./config/AppRouter";
 
 const App = () => {
   return (
-    <div className="text-4xl font-bold">
-      Whereas disregard and contempt for human rights have resulted
-    </div>
+    // App router 
+    <AppRouter/>
   );
 }
 
