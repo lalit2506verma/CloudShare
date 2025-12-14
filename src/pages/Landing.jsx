@@ -1,4 +1,3 @@
-import React from 'react'
 import HeroSection from '../components/landing/HeroSection';
 import FeatureSection from '../components/landing/FeatureSection';
 import SubscriptionSection from '../components/landing/SubscriptionSection';
@@ -6,6 +5,8 @@ import TestimonialSection from '../components/landing/TestimonialSection';
 import { features } from '../data/FeatureData';
 import { subscriptionPlans } from '../data/SubscriptionPlan';
 import { testimonials } from '../data/TestimonialData';
+import CTASection from '../components/landing/CTASection';
+import FooterSection from '../components/landing/FooterSection';
 
 
 const Landing = () => {
@@ -26,7 +27,10 @@ const Landing = () => {
         <TestimonialSection testimonials={ testimonials }/>
         
         {/* CTA Section */}
+        <CTASection />
+        
         {/* Footer */}
+        <FooterSection/>
       </div>
     </>
   );
