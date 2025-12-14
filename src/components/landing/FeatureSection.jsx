@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-const FeatureSection = ({features}) => {
+const FeatureSection = ({ features }) => {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,21 +10,40 @@ const FeatureSection = ({features}) => {
           </h2>
 
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
-            Cloud Share provide all the tools you need to manage your digital content
+            Cloud Share provide all the tools you need to manage your digital
+            content
           </p>
         </div>
 
         <div className="mt-16">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"></div>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="pt-5 border border-gray-100 shadow-lg rounded-sm hover:shadow-lg transition-shadow duration-300 bg-white"
+              >
+                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                  <div className="-mt-6">
+                    <div className="inline-flex items-center justify-center p-3 bg-white rounded-md shadow-lg">
+                      <feature.icon className={`h-8 w-8 ${feature.color} transition-transform hover:scale-110`} />
+                    </div>
+
+                    <h3 className="mt-5 text-lg font-semibold text-gray-900 tracking-tight">
+                      {feature.title}
+                    </h3>
+
+                    <p className="mt-2 text-base text-gray-500">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        {features.map((feature, index) => (
-          <div key={index} className="pt-5 border border-gray-100 shadow-lg rounded-sm hover:shadow-lg transition-shadow duration-300 bg-white">
-            <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8"></div>
-            </div>
-          ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default FeatureSection
+export default FeatureSection;

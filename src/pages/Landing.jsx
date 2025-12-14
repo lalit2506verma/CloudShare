@@ -4,6 +4,8 @@ import FeatureSection from '../components/landing/FeatureSection';
 import SubscriptionSection from '../components/landing/SubscriptionSection';
 import TestimonialSection from '../components/landing/TestimonialSection';
 import { features } from '../data/FeatureData';
+import { subscriptionPlans } from '../data/SubscriptionPlan';
+
 
 const Landing = () => {
   return (
@@ -17,7 +19,7 @@ const Landing = () => {
         <FeatureSection features={features}/>
         
         {/* Subscription Section */}
-        <SubscriptionSection />
+        <SubscriptionSection subscriptionPlans={subscriptionPlans} />
       
         {/* Testimonal Section */}
         <TestimonialSection />

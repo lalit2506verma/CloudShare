@@ -2,28 +2,40 @@ import { Cloud, Share2, Upload, Lock, Smartphone, Users } from "lucide-react";
 
 export const features = [
   {
-    icon: <Cloud className="h-6 w-6 text-indigo-600" />,
-    context:
+    icon: Cloud,
+    title: "Cloud Storage",
+    description:
       "Securely store your files in the cloud with end‑to‑end encryption.",
+    color: "text-blue-500",
   },
   {
-    icon: <Share2 className="h-6 w-6 text-indigo-600" />,
-    context: "Instantly share files with anyone using simple links.",
+    icon: Share2,
+    title: "Easy Sharing",
+    description: "Instantly share files with anyone using simple links.",
+    color: "text-green-500",
   },
   {
-    icon: <Upload className="h-6 w-6 text-indigo-600" />,
-    context: "Fast uploads and downloads optimized for all devices.",
+    icon: Upload,
+    title: "Fast Uploads",
+    description: "Quick uploads and downloads optimized for all devices.",
+    color: "text-pink-500",
   },
   {
-    icon: <Lock className="h-6 w-6 text-indigo-600" />,
-    context: "Advanced privacy controls to decide who can view or edit.",
+    icon: Lock,
+    title: "Privacy Controls",
+    description: "Advanced privacy settings to decide who can view or edit.",
+    color: "text-red-500",
   },
   {
-    icon: <Smartphone className="h-6 w-6 text-indigo-600" />,
-    context: "Access your files anytime, anywhere on mobile or desktop.",
+    icon: Smartphone,
+    title: "Cross‑Platform Access",
+    description: "Access your files anytime, anywhere on mobile or desktop.",
+    color: "text-purple-500",
   },
   {
-    icon: <Users className="h-6 w-6 text-indigo-600" />,
-    context: "Collaborate seamlessly with teams through shared folders.",
+    icon: Users,
+    title: "Team Collaboration",
+    description: "Collaborate seamlessly with teams through shared folders.",
+    color: "text-yellow-500",
   },
 ];
