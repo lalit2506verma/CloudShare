@@ -48,16 +48,16 @@ const SubscriptionSection = ({ subscriptionPlans }) => {
                   {subscriptionPlan.description}
                 </p>
 
-                <div class="flex items-baseline text-heading mt-4">
-                  <span class="text-4xl font-bold tracking-tight">
+                <div className="flex items-baseline text-heading mt-4">
+                  <span className="text-4xl font-bold tracking-tight">
                     ₹{subscriptionPlan.price}
                   </span>
-                  <span class="ms-2 font-medium text-body">/month</span>
+                  <span className="ms-2 font-medium text-body">/month</span>
                 </div>
               </div>
 
               <div className="flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6">
-                <ul role="list" class="space-y-4 my-6">
+                <ul role="list" className="space-y-4 my-6">
                   {subscriptionPlan.features.map((feature, index) => (
                     <li
                       key={index}
@@ -66,7 +66,7 @@ const SubscriptionSection = ({ subscriptionPlans }) => {
                       }`}
                     >
                       <svg
-                        class="w-5 h-5 shrink-0 text-fg-brand me-1.5"
+                        className="w-5 h-5 shrink-0 text-fg-brand me-1.5"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -76,20 +76,20 @@ const SubscriptionSection = ({ subscriptionPlans }) => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                         />
                       </svg>
-                      <span class="text-body">{feature.text}</span>
+                      <span className="text-body">{feature.text}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="rounded-md shadow">
                   <button
                     type="button"
-                    class={`w-full rounded-md bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none cursor-pointer ${subscriptionPlan.highlighted ? 'text-white bg-purple-500 hover:bg-purple-600' : 'text-purple-600 bg-white hover:bg-gray-50'} transition-colors duration-200`}
+                    className={`w-full rounded-md bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none cursor-pointer ${subscriptionPlan.highlighted ? 'text-white bg-purple-500 hover:bg-purple-600' : 'text-purple-600 bg-white hover:bg-gray-50'} transition-colors duration-200`}
                   >
                     {subscriptionPlan.cta}
                   </button>

@@ -5,6 +5,7 @@ import SubscriptionSection from '../components/landing/SubscriptionSection';
 import TestimonialSection from '../components/landing/TestimonialSection';
 import { features } from '../data/FeatureData';
 import { subscriptionPlans } from '../data/SubscriptionPlan';
+import { testimonials } from '../data/TestimonialData';
 
 
 const Landing = () => {
@@ -16,13 +17,13 @@ const Landing = () => {
         <HeroSection/>
         
         {/* Feature Section */}
-        <FeatureSection features={features}/>
+        <FeatureSection features={ features }/>
         
         {/* Subscription Section */}
-        <SubscriptionSection subscriptionPlans={subscriptionPlans} />
+        <SubscriptionSection subscriptionPlans={ subscriptionPlans } />
       
         {/* Testimonal Section */}
-        <TestimonialSection />
+        <TestimonialSection testimonials={ testimonials }/>
         
         {/* CTA Section */}
         {/* Footer */}
