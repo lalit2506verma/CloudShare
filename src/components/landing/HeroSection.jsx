@@ -1,7 +1,10 @@
 import React from "react";
 import Dashboard from "../../assets/Dashboard.png";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="flex flex-col p-28 gap-11 bg-linear-to-r from-pink-100 via-purple-100 to-blue-100">
       <div className="text-center">
@@ -19,11 +22,15 @@ const HeroSection = () => {
 
         {/* Get Started Button */}
         <div className="flex justify-center m-3 gap-5">
-          <button className="bg-purple-600 rounded-lg p-3 text-white shadow hover:bg-purple-800 hover:cursor-pointer hover:shadow-xl">
+          <button
+            onClick={() => navigate("/auth/register")}
+            className="bg-purple-600 rounded-lg p-3 text-white shadow hover:bg-purple-800 hover:cursor-pointer hover:shadow-xl">
             Get Started
           </button>
 
-          <button className="rounded-lg bg-white p-3 w-28 shadow hover:cursor-pointer hover:shadow-xl">
+          <button
+            onClick={() => navigate("/auth/login")}
+            className="rounded-lg bg-white p-3 w-28 shadow hover:cursor-pointer hover:shadow-xl">
             Sign In
           </button>
         </div>

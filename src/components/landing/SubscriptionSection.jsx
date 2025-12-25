@@ -1,7 +1,11 @@
 import React from "react";
 import { features } from "../../data/FeatureData";
+import { useNavigate } from "react-router-dom";
 
 const SubscriptionSection = ({ subscriptionPlans }) => {
+
+  const navigate = useNavigate();
+  
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8">
@@ -89,6 +93,7 @@ const SubscriptionSection = ({ subscriptionPlans }) => {
                 <div className="rounded-md shadow">
                   <button
                     type="button"
+                    onClick={() => navigate("/auth/register")}
                     className={`w-full rounded-md bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none cursor-pointer ${subscriptionPlan.highlighted ? 'text-white bg-purple-500 hover:bg-purple-600' : 'text-purple-600 bg-white hover:bg-gray-50'} transition-colors duration-200`}
                   >
                     {subscriptionPlan.cta}
