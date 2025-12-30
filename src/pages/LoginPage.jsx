@@ -2,9 +2,11 @@ import { useState } from "react";
 import LoginSection from "../components/loginAndRegister/LoginSection";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/AuthService";
+import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Form Data state
   const [credentials, setCredentials] = useState({
@@ -60,6 +62,11 @@ const LoginPage = () => {
     try {
       const response = await loginUser(credentials);
       console.log(response);
+      
+      if (response.token && response.user) {
+        login(response.user, response.token)
+        navigate('/dashboard');
+      }
       
       // Reset Credentials
       setCredentials({
