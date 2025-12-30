@@ -1,14 +1,14 @@
 import login_form_illustrator from "../../assets/login_page_illustration.png";
 import { Link } from "react-router-dom";
 
-const LoginSection = () => {
+const LoginSection = ({ credentials, handleChange, handleSubmit, loading, error}) => {
   return (
     <div className=" min-h-screen flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden border border-transparent">
         <div className="grid md:grid-cols-2">
           {/* Left – Form */}
           <div className="p-6 md:p-10">
-            <div className="flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-900">
                   Welcome back
@@ -18,10 +18,21 @@ const LoginSection = () => {
                 </p>
               </div>
 
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 text-red-600 px-4 py-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
+
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-semibold">Email</label>
                 <input
                   type="email"
+                  name="email"
+                  value={credentials.email}
+                  onChange={handleChange}
+                  disabled={loading}
                   placeholder="m@example.com"
                   className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
@@ -39,12 +50,16 @@ const LoginSection = () => {
                 </div>
                 <input
                   type="password"
+                  name="password"
+                  value={credentials.password}
+                  onChange={handleChange}
+                  disabled={loading}
                   className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
               <button className="bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-all font-semibold">
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
 
               <div className="relative text-center text-sm text-gray-500">
@@ -105,7 +120,7 @@ const LoginSection = () => {
                   Sign up
                 </Link>
               </p>
-            </div>
+            </form>
           </div>
 
           {/* Right – Illustration */}

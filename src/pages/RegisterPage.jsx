@@ -86,7 +86,7 @@ const RegisterPage = () => {
       }, 4000);
     }
     catch (err) {
-      // Handle different error response formats
+      // Handle error response formats
       const errorMessage =
         err.response?.data?.message ||
         err.response?.data ||
