@@ -1,7 +1,7 @@
 import login_form_illustrator from "../../assets/login_page_illustration.png";
 import { Link } from "react-router-dom";
 
-const RegisterSection = () => {
+const RegisterSection = ({formData, handleChange, handleSubmit, loading, error, success}) => {
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden border border-transparent">
@@ -17,7 +17,7 @@ const RegisterSection = () => {
 
           {/* Right – Form */}
           <div className="px-10 py-6 md:px-10 md:pt-8 md:pb-4">
-            <div className="flex flex-col gap-5">
+            <form onSubmit={ handleSubmit } className="flex flex-col gap-5">
               {/* Heading */}
               <div className="flex flex-col items-center text-center mb-5">
                 <h1 className="text-2xl font-bold text-gray-900">Welcome</h1>
@@ -26,12 +26,30 @@ const RegisterSection = () => {
                 </p>
               </div>
 
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 text-red-600 px-4 py-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
+
+              {/* Success Message */}
+              {success && (
+                <div className="bg-green-50 text-green-600 px-4 py-3 rounded-md text-sm">
+                  {success}
+                </div>
+              )}
+
               <div className="flex flex-col gap-4 lg:flex-row">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold">First Name</label>
                   <input
-                    type="firstName"
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     placeholder="Joe"
+                    disabled={loading}
                     className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
@@ -39,8 +57,12 @@ const RegisterSection = () => {
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold">Last Name</label>
                   <input
-                    type="lastName"
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     placeholder="Warner"
+                    disabled={loading}
                     className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
@@ -50,7 +72,11 @@ const RegisterSection = () => {
                 <label className="text-sm font-semibold">Email</label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="you@example.com"
+                  disabled={loading}
                   className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
@@ -58,7 +84,7 @@ const RegisterSection = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">
                   <label className="text-sm font-semibold">Password</label>
-                  <a
+                  <a    
                     href="#"
                     className="text-sm text-purple-600 hover:underline font-medium"
                   >
@@ -67,12 +93,19 @@ const RegisterSection = () => {
                 </div>
                 <input
                   type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={loading}
                   className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
-              <button className="bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-all font-semibold">
-                Register
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-all font-semibold">
+                  {loading ? "Registering..." : "Register"}
               </button>
 
               <div className="relative text-center text-sm text-gray-500">
@@ -133,7 +166,7 @@ const RegisterSection = () => {
                   Sign In
                 </Link>
               </p>
-            </div>
+            </form>
           </div>
         </div>
       </div>
