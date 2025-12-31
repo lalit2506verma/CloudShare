@@ -9,23 +9,57 @@ export const AuthProvider = ({ children }) => {
 
   // Loading user and token from the localStorage
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    try {
+      const storedToken = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("user");
 
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      // Check if values exist and are not "undefined" string
+      if (
+        storedToken &&
+        storedToken !== "undefined" &&
+        storedUser &&
+        storedUser !== "undefined"
+      ) {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+      } else {
+        // Clear invalid data
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
+    } catch (error) {
+      console.error("Error loading auth data from localStorage:", error);
+      // Clear corrupted data
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
   
   // Login function
   const login = (userData, authToken) => {
+    console.log("login function hit in AuthContext");
+    console.log("User data:", userData);
+    console.log("Token:", authToken);
+
+    // Validate inputs before storing
+    if (!userData || !authToken) {
+      console.error("Invalid login data: userData or authToken is missing");
+      return;
+    }
+
+    if (typeof userData !== "object") {
+      console.error("Invalid userData: must be an object");
+      return;
+    }
+
     setUser(userData);
     setToken(authToken);
 
-    localStorage.setItem('token', authToken);
-    localStorage.setItem('user', userData);
+    localStorage.setItem("token", authToken);
+    // FIXED: Must stringify user object before storing
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   // Logout function

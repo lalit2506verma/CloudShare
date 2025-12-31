@@ -39,11 +39,10 @@ const LoginPage = () => {
       setError("Password is required");
       return false;
     }
-    if (!/\S+\.\S+/.test(credentials.email)) {
+    if (!/\S+@\S+\.\S+/.test(credentials.email)) {
       setError("Please provide a valid email");
       return false;
     }
-
     return true;
   };
 
@@ -62,10 +61,14 @@ const LoginPage = () => {
     try {
       const response = await loginUser(credentials);
       console.log(response);
-      
-      if (response.token && response.user) {
-        login(response.user, response.token)
-        navigate('/dashboard');
+
+      if (response.token && response.userDto) {
+        login(response.userDto, response.token);
+
+        // redirecting to Home page after 1 second
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
       }
       
       // Reset Credentials
@@ -74,10 +77,6 @@ const LoginPage = () => {
         password: "",
       });
 
-      // redirecting to Home page after 1 second
-      setTimeout(() => {
-        navigate("/home");
-      }, 1500);
     } catch (error) {
       // Handle response format
       const errorMessage =

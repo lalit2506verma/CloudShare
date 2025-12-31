@@ -58,7 +58,9 @@ const LoginSection = ({ credentials, handleChange, handleSubmit, loading, error}
                 />
               </div>
 
-              <button className="bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-all font-semibold">
+              <button
+                type=""
+                className="bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-all font-semibold">
                 {loading ? "Logging in..." : "Login"}
               </button>
 
