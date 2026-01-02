@@ -4,6 +4,7 @@ import { TbCloudShare } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import SideMenu from "./SideMenu";
+import DisplayCredits from "./DisplayCredits";
 
 const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
   const { user } = useAuth();
@@ -38,7 +39,7 @@ const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
       {user && (
         <div className="flex items-center gap-4">
           <Link to="/subscription">
-            <Wallet className="text-gray-700" />
+            <DisplayCredits credits={5}/>
           </Link>
           
           {/* Profile Button */}
