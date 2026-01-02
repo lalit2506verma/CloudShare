@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext"
+import Navbar from "../components/Navbar";
+import SideMenu from "../components/SideMenu";
+import { useState } from "react";
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children, activeMenu}) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [openSideMenu, setOpenSideMenu] = useState();
+
 
   const handleLogout = () => {
     logout();
@@ -11,56 +16,38 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
-          >
-            Logout
-          </button>
-        </div>
-      </header>
+    <>
+      {/* NavBar */}
+      <Navbar openSideMenu={openSideMenu} setOpenSideMenu={setOpenSideMenu} activeMenu={activeMenu} />
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-xl font-semibold mb-4">Welcome back!</h2>
+      {user && (
+        <div className="flex bg-slate-50">
+          <div className="max-[1080px]:hidden">
+            {/* Side menu */}
+            <SideMenu onClose={() => setOpenSideMenu(false)} activeMenu={activeMenu} />
+          </div>
 
-          {/* Display User Information */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-4">
-              <span className="text-gray-600 font-medium">Name:</span>
-              <span className="text-gray-900">
-                {user?.firstName} {user?.lastName}
-              </span>
-            </div>
+          {/* Mobile Sidebar -overlay with backdrop */}
+          {openSideMenu && (
+            <>
+              {/* Backdrop - Click to close
+              <div
+                className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                onClick={() => setOpenSideMenu(false)}
+              /> */}
 
-            <div className="flex items-center gap-4">
-              <span className="text-gray-600 font-medium">Email:</span>
-              <span className="text-gray-900">{user?.email}</span>
-            </div>
-
-            {user?.userId && (
-              <div className="flex items-center gap-4">
-                <span className="text-gray-600 font-medium">User ID:</span>
-                <span className="text-gray-900">{user.userId}</span>
+              {/* Sidebar Drawer */}
+              <div className="fixed top-17.5 left-0 bottom-0 z-50 lg:hidden">
+                <SideMenu onClose={() => setOpenSideMenu(false)} activeMenu={activeMenu} />
               </div>
-            )}
-          </div>
+            </>
+          )}
 
-          {/* Example of using user data in components */}
-          <div className="mt-8 p-4 bg-purple-50 rounded-lg">
-            <p className="text-sm text-purple-800">
-              🎉 You're logged in as <strong>{user?.email}</strong>
-            </p>
-          </div>
+          {/* Main Content */}
+          <div className="flex-1 p-5 w-full">{children}</div>
         </div>
-      </main>
-    </div>
+      )}
+    </>
   );
 }
 
