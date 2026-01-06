@@ -5,17 +5,29 @@ import {
   Download,
   Eye,
   File,
+  FileIcon,
+  FileText,
   Globe,
   Grid,
+  Image,
   List,
   Lock,
+  Music,
   Trash,
+  Video,
 } from "lucide-react";
-import { fetchAllMyFiles } from "../services/FileService";
+import {
+  deleteFile,
+  downloadFile,
+  fetchAllMyFiles,
+  toggleFileAccess,
+} from "../services/FileService";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FileCard from "../components/FileCard";
 import { HashLoader } from "react-spinners";
+import ConfirmationDialog from "../components/dialog/ConfirmationDialog";
+import ShareLinkDialog from "../components/dialog/ShareLinkDialog";
 
 const MyFilesPage = () => {
   const { user } = useAuth();
@@ -25,6 +37,49 @@ const MyFilesPage = () => {
   const [viewMode, setViewMode] = useState("list");
   const [loading, setLoading] = useState(false);
 
+  // Dialog State
+  const [deleteDialog, setDeleteDialog] = useState({
+    isOpen: false,
+    fileToDelete: null,
+    loading: false,
+  });
+
+  // Access State
+  const [accessDialog, setAccessDialog] = useState({
+    isOpen: false,
+    fileToToggle: null,
+    loading: false,
+  });
+
+  // Copy Link State
+  const [shareDialog, setShareDialog] = useState({
+    isOpen: false,
+    fileId: null,
+    link: "",
+  });
+
+  // File Icon
+  const getFileIcon = (fileName) => {
+    const fileExtension = fileName.split(".").pop().toLowerCase();
+
+    if (["png", "jpg", "jpeg", "gif", "svg", "webp"].includes(fileExtension)) {
+      return <Image size={20} className="text-purple-500" />;
+    } else if (["mp4", "webm", "mov", "avi", "mkv"].includes(fileExtension)) {
+      return <Video size={20} className="text-blue-500" />;
+    } else if (["mp3", "mav", "ogg", "flac", "m4a"].includes(fileExtension)) {
+      return <Music size={20} className="text-green-500" />;
+    } else if (
+      ["pdf", "doc", "docx", "txt", "rtf", "xlsx", "xls"].includes(
+        fileExtension
+      )
+    ) {
+      return <FileText size={20} className="text-amber-500" />;
+    } else {
+      return <FileIcon size={20} className="text-gray-500" />;
+    }
+  };
+
+  //Get the List of files
   const getMyFiles = async () => {
     const response = await fetchAllMyFiles();
     if (response.status === 200) {
@@ -33,17 +88,129 @@ const MyFilesPage = () => {
     }
   };
 
+  // Handle File Download
+  const handleDownload = async (file) => {
+    try {
+      const response = await downloadFile(file);
+    } catch (error) {
+      console.log("Error in Downloading the file");
+    }
+  };
+
+  // Open Delete Dialog
+  const openDeleteDialog = (file) => {
+    setDeleteDialog({
+      isOpen: true,
+      fileToDelete: file,
+      loading: false,
+    });
+  };
+
+  // Close Delete Dialog
+  const closeDeleteDialog = () => {
+    setDeleteDialog({
+      isOpen: false,
+      fileToDelete: null,
+      loading: false,
+    });
+  };
+
+  // Confirm Delete
+  const confirmDelete = async () => {
+    setDeleteDialog((prev) => ({ ...prev, loading: true }));
+
+    try {
+      const res = await deleteFile(deleteDialog.fileToDelete.id);
+
+      if (res.status === 204) {
+        // Remove from the list
+        setFiles((prevFiles) =>
+          prevFiles.filter((file) => file.id !== deleteDialog.fileToDelete.id)
+        );
+      }
+
+      // Close Dialog
+      closeDeleteDialog();
+    } catch (error) {
+      console.log(error);
+      setDeleteDialog((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
+  // Open Access Toggle dialog
+  const openAccessDialog = (file) => {
+    setAccessDialog({
+      isOpen: true,
+      fileToToggle: file,
+      loading: false,
+    });
+  };
+
+  // Close Access Toggle dialog
+  const closeAccessDialog = () => {
+    setAccessDialog({
+      isOpen: false,
+      fileToToggle: null,
+      loading: false,
+    });
+  };
+
+  // Open Share Link Dialog
+  const openShareLinkDialog = (fileId) => {
+    console.log("OpenShareLink");
+    
+    const link = `${window.location.origin}/files/${fileId}`;
+    setShareDialog({
+      isOpen: true,
+      fileId: fileId,
+      link: link,
+    });
+  };
+
+  // Close share link Dialog
+  const closeShareLinkDialog = () => {
+    setShareDialog({
+      isOpen: false,
+      fileId: null,
+      link: "",
+    });
+  };
+
+  // Toggle the PUBLIC and PRIVATE status of the file
+  const confirmAccessToggle = async () => {
+    setAccessDialog((prev) => ({ ...prev, loading: true }));
+    try {
+      const res = await toggleFileAccess(accessDialog.fileToToggle.id);
+
+      if (res.status === 200) {
+        // Updating in the file Hook
+        setFiles(
+          files.map((file) =>
+            file.id === accessDialog.fileToToggle.id
+              ? { ...file, public: !file.public }
+              : file
+          )
+        );
+      }
+
+      // Close Dialog
+      closeAccessDialog();
+    } catch (error) {
+      console.log("Error Occured");
+      setAccessDialog((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     try {
       Promise.all([
         getMyFiles(),
-        new Promise(resolve => setTimeout(resolve, 2000))
+        new Promise((resolve) => setTimeout(resolve, 2000)),
       ]).then(() => {
         setLoading(false);
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       setLoading(false);
     }
@@ -103,7 +270,14 @@ const MyFilesPage = () => {
           // Grid View
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {files.map((file) => (
-              <FileCard key={file.id} file={file} />
+              <FileCard
+                key={file.id}
+                file={file}
+                toggleAccess={() => openAccessDialog(file)}
+                onDelete={() => openDeleteDialog(file)}
+                shareLink={() => openShareLinkDialog(file.id)}
+                handleDownload={() => handleDownload(file)}
+              />
             ))}
           </div>
         ) : (
@@ -138,7 +312,7 @@ const MyFilesPage = () => {
                     {/* File Name */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                       <div className="flex items-center gap-2">
-                        <File size={20} className="text-blue-600" />
+                        {getFileIcon(file.name)}
                         {file.name}
                       </div>
                     </td>
@@ -156,7 +330,10 @@ const MyFilesPage = () => {
                     {/* File Access */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                       <div className="flex items-center gap-4">
-                        <button className="flex items-center gap-2 cursor-pointer group">
+                        <button
+                          onClick={() => openAccessDialog(file)}
+                          className="flex items-center gap-2 cursor-pointer group"
+                        >
                           {file.public ? (
                             // If File is Public
                             <>
@@ -177,7 +354,9 @@ const MyFilesPage = () => {
                         </button>
 
                         {file.public && (
-                          <button className="flex items-center gap-2 cursor-pointer group text-blue-600">
+                          <button
+                            onClick={() => openShareLinkDialog(file.id)}
+                            className="flex items-center gap-2 cursor-pointer group text-blue-600">
                             <Copy size={16} />
                             <span className="group-hover:underline">
                               Share Link
@@ -193,6 +372,7 @@ const MyFilesPage = () => {
                         {/* Download Button */}
                         <div className="flex justify-center">
                           <button
+                            onClick={() => handleDownload(file)}
                             title="Download"
                             className="text-gray-500 hover:text-blue-600"
                           >
@@ -203,6 +383,7 @@ const MyFilesPage = () => {
                         {/* Delete Button */}
                         <div className="flex justify-center">
                           <button
+                            onClick={() => openDeleteDialog(file)}
                             title="Delete"
                             className="text-gray-500 hover:text-red-600"
                           >
@@ -213,13 +394,15 @@ const MyFilesPage = () => {
                         {/* View Button  */}
                         <div className="flex justify-center">
                           {file.public ? (
-                            <Link
-                              title="view"
-                              to={`/file/${file.id}`}
+                            <a
+                              title="View File"
+                              target="_blank"
+                              rel="noreferrer"
+                              href={`/file/${file.id}`}
                               className="text-gray-500 hover:text-blue-600"
                             >
                               <Eye size={18} />
-                            </Link>
+                            </a>
                           ) : (
                             <span className="w-4.5" />
                           )}
@@ -233,6 +416,52 @@ const MyFilesPage = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={closeDeleteDialog}
+        title="Delete File"
+        message={`Are you sure you want to delete "${deleteDialog.fileToDelete?.name}" ? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={confirmDelete}
+        varient="danger"
+        loading={deleteDialog.loading}
+      />
+
+      {/* Toggle Access Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={accessDialog.isOpen}
+        onClose={closeAccessDialog}
+        title={`Make File ${
+          accessDialog.fileToToggle?.public ? "Private" : "Public"
+        }`}
+        message={
+          accessDialog.fileToToggle?.public
+            ? `Are you sure you want to make "${accessDialog.fileToToggle?.name}" private? It will no longer be accessible via public link.`
+            : `Are you sure you want to make "${accessDialog.fileToToggle?.name}" public? Anyone with the link will be able to access it.`
+        }
+        confirmText={
+          accessDialog.fileToToggle?.public ? "Make Private" : "Make Public"
+        }
+        cancelText="Cancel"
+        onConfirm={confirmAccessToggle}
+        varient={accessDialog.fileToToggle?.public ? "warning" : "info"}
+        confirmButtonClass={
+          accessDialog.fileToToggle?.public
+            ? "bg-purple-600 hover:bg-purple-700 focus:ring-green-500"
+            : "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500"
+        }
+        loading={accessDialog.loading}
+      />
+
+      {/* Share Link Dialog */}
+      <ShareLinkDialog
+        isOpen={shareDialog.isOpen}
+        onClose={closeShareLinkDialog}
+        link={shareDialog.link}
+      />
     </DashboardLayout>
   );
 };
