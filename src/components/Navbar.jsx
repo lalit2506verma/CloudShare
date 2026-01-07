@@ -1,13 +1,15 @@
 import { Menu, UserRound, Wallet, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbCloudShare } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import SideMenu from "./SideMenu";
 import DisplayCredits from "./DisplayCredits";
+import { useCredits } from "../contexts/UserCreditsContext";
 
 const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
   const { user } = useAuth();
+  const { credits } = useCredits();
 
   return (
     <div className="flex items-center justify-between gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-4 sm:px-7 sticky top-0 z-30">
@@ -39,7 +41,7 @@ const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
       {user && (
         <div className="flex items-center gap-4">
           <Link to="/subscription">
-            <DisplayCredits credits={5}/>
+            <DisplayCredits credits={credits}/>
           </Link>
           
           {/* Profile Button */}

@@ -1,7 +1,9 @@
 import { CreditCard } from 'lucide-react'
 import React from 'react'
 
-const DisplayCredits = ({credits}) => {
+const DisplayCredits = ({ credits }) => {
+  console.log("Credits for context", credits);
+  
   return (
     <div className="flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-full text-blue-700">
       <CreditCard size={16} />
