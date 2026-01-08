@@ -14,7 +14,7 @@ export const fetchAllMyFiles = async () => {
 
 export const toggleFileAccess = async(fileId) => {
   try {
-    const response = myAxios.patch(`/files/toggle-public/${fileId}`, {});
+    const response = await myAxios.patch(`/files/toggle-public/${fileId}`, {});
     // console.log(response);
     return response;
   }
@@ -54,11 +54,28 @@ export const downloadFile = async (file) => {
   }
 }
 
-export const deleteFile = (fileId) => {
+export const deleteFile = async (fileId) => {
   try {
-    const response = myAxios.delete(`/files/${fileId}`);
+    const response = await myAxios.delete(`/files/${fileId}`);
     console.log("Delete Response: "+response);
     
+    return response;
+  }
+  catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export const uploadFiles = async (formData) => {
+  try {
+    const response = await myAxios.post("/files/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    
+    console.log(response);
     return response;
   }
   catch (error) {
