@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import DashboardLayout from '../layouts/DashboardLayout'
 import { AlertCircle } from 'lucide-react';
 import { useCredits } from '../contexts/UserCreditsContext';
-import UploadBox from '../components/uploadFiles/uploadBox';
 import { uploadFiles } from '../services/FileService';
+import UploadBox from '../components/uploadFiles/UploadBox';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);

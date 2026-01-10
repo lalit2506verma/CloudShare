@@ -10,6 +10,7 @@ const UploadBox = ({
   remainingCredits,
   isUploadDisabled,
   maxFiles = 5,
+  location = "uploadPage"
 }) => {
   const [isDragging, SetIsDragging] = useState(false);
 
@@ -41,7 +42,7 @@ const UploadBox = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full mx-auto max-w-4xl">
       {/* Upload Card */}
       <div className="">
         {/* Header */}
@@ -52,7 +53,7 @@ const UploadBox = ({
           </h2>
 
           <span className="text-sm text-gray-500">
-            Credits: <b>{remainingCredits}</b>
+            Remaining files: <b>{remainingCredits}</b>
           </span>
         </div>
 
