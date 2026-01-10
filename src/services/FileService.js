@@ -83,3 +83,15 @@ export const uploadFiles = async (formData) => {
     throw error;
   }
 }
+
+export const fetchFile = async (fileId) => {
+  try {
+    const response = await myAxios.get(`/files/public/${fileId}`);
+    console.log(response);
+    return response.data;
+  }
+  catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

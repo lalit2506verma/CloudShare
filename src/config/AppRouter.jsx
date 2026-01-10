@@ -8,6 +8,7 @@ import UploadPage from "../pages/UploadPage";
 import MyFilesPage from "../pages/MyFilesPage";
 import SubscriptionPage from "../pages/SubscriptionPage";
 import TransactionPage from "../pages/TransactionPage";
+import PublicFileView from "../pages/PublicFileView";
 
 const AppRouter = () => {
   return (
@@ -61,6 +62,8 @@ const AppRouter = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/files/:fileId" element={<PublicFileView/>}/>
     </Routes>
   );
 };

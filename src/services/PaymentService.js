@@ -24,3 +24,15 @@ export const verifyPayment = async (transaction) => {
     throw error;
   }
 }
+
+export const fetchTransactions = async () => {
+  try {
+    const response = await myAxios.get("/api/transactions");
+    console.log(response);
+    return response.data;
+  }
+  catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

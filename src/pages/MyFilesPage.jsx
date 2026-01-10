@@ -372,7 +372,7 @@ const MyFilesPage = () => {
                         {/* Download Button */}
                         <div className="flex justify-center">
                           <button
-                            onClick={() => handleDownload(file)}
+                            onClick={() => handleDownload(file.id, file.name)}
                             title="Download"
                             className="text-gray-500 hover:text-blue-600"
                           >
@@ -398,7 +398,7 @@ const MyFilesPage = () => {
                               title="View File"
                               target="_blank"
                               rel="noreferrer"
-                              href={`/file/${file.id}`}
+                              href={`/files/${file.id}`}
                               className="text-gray-500 hover:text-blue-600"
                             >
                               <Eye size={18} />
