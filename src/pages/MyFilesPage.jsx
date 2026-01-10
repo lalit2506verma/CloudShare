@@ -84,7 +84,7 @@ const MyFilesPage = () => {
     const response = await fetchAllMyFiles();
     if (response.status === 200) {
       setFiles(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     }
   };
 
