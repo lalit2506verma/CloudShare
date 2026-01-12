@@ -9,6 +9,7 @@ import MyFilesPage from "../pages/MyFilesPage";
 import SubscriptionPage from "../pages/SubscriptionPage";
 import TransactionPage from "../pages/TransactionPage";
 import PublicFileView from "../pages/PublicFileView";
+import ProfilePage from "../pages/ProfilePage";
 
 const AppRouter = () => {
   return (
@@ -63,7 +64,8 @@ const AppRouter = () => {
         }
       />
 
-      <Route path="/files/:fileId" element={<PublicFileView/>}/>
+      <Route path="/files/:fileId" element={<PublicFileView />} />
+      <Route path="user/profile" element={<ProfilePage/>} />
     </Routes>
   );
 };

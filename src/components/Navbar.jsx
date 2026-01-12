@@ -6,10 +6,17 @@ import { useAuth } from "../contexts/AuthContext";
 import SideMenu from "./SideMenu";
 import DisplayCredits from "./DisplayCredits";
 import { useCredits } from "../contexts/UserCreditsContext";
+import ProfileDropdown from "./dialog/ProfileDropdown";
 
 const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
   const { user } = useAuth();
   const { credits } = useCredits();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // Toggle profile button - Open and close
+  const toggleprofileDropdown = () => {
+    setIsProfileOpen(!isProfileOpen);
+  }
 
   return (
     <div className="flex items-center justify-between gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-4 sm:px-7 sticky top-0 z-30">
@@ -41,14 +48,30 @@ const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
       {user && (
         <div className="flex items-center gap-4">
           <Link to="/subscription">
-            <DisplayCredits credits={credits}/>
+            <DisplayCredits credits={credits} />
           </Link>
-          
+
           {/* Profile Button */}
           <div className="relative">
-            <button className="flex items-center justify-center rounded-full size-9 bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-300 hover:border-gray-700">
-              <UserRound className="text-gray-700" />
+            <button
+              onClick={toggleprofileDropdown}
+              className="flex items-center justify-center rounded-full size-9 bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-300 hover:border-gray-700"
+            >
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt="Profile"
+                  className="size-full rounded-full object-cover"
+                />
+              ) : (
+                <UserRound size={18} className="text-gray-700" />
+              )}
             </button>
+            {/* Profile Dropdown */}
+            <ProfileDropdown
+              isOpen={isProfileOpen}
+              onClose={() => setIsProfileOpen(false)}
+            />
           </div>
         </div>
       )}
