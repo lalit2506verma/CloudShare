@@ -38,7 +38,10 @@ const SideMenu = ({onclose, activeMenu}) => {
             className="size-20 bg-slate-400 rounded-full"
           />
         ) : (
-          <UserRound className="size-20 text-xl text-blue-500 rounded-full border-4" />
+          <div className="h-30 w-30 rounded-full bg-linear-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-4xl font-bold">
+            {user?.firstName?.[0]}
+            {user?.lastName?.[0]}
+          </div>
         )}
 
         <h5 className="text-gray-950 font-semibold leading-6">
@@ -49,11 +52,15 @@ const SideMenu = ({onclose, activeMenu}) => {
       {SIDE_MENU_DATA.map((item, index) => (
         <button
           key={index}
-          className={`w-full flex items-center gap-4 text-[15px] py-3 px-6 rounded-lg mb-3 transition-all duration-200 cursor-pointer ${activeMenu == item.label ? "bg-purple-500 text-white font-medium shadow-md hover:bg-purple-600": "hover:bg-gray-100"}`}
+          className={`w-full flex items-center gap-4 text-[15px] py-3 px-6 rounded-lg mb-3 transition-all duration-200 cursor-pointer ${
+            activeMenu == item.label
+              ? "bg-purple-500 text-white font-medium shadow-md hover:bg-purple-600"
+              : "hover:bg-gray-100"
+          }`}
           onClick={() => handleNavigation(item.path)}
         >
           <item.icon className="text-xl" />
-          <span className="font-semibold">{ item.label }</span>
+          <span className="font-semibold">{item.label}</span>
         </button>
       ))}
     </div>

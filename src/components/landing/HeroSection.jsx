@@ -1,5 +1,4 @@
-import React from "react";
-import Dashboard from "../../assets/Dashboard.png";
+import Dashboard from "../../assets/Dashboard2.png";
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {

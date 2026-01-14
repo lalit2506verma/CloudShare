@@ -64,7 +64,10 @@ const Navbar = ({openSideMenu, setOpenSideMenu, activeMenu}) => {
                   className="size-full rounded-full object-cover"
                 />
               ) : (
-                <UserRound size={18} className="text-gray-700" />
+                <div className="size-full rounded-full bg-linear-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-medium font-bold">
+                  {user?.firstName?.[0]}
+                  {user?.lastName?.[0]}
+                </div>
               )}
             </button>
             {/* Profile Dropdown */}
