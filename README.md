@@ -3,6 +3,13 @@
 CloudShare Frontend is a **modern, responsive file-sharing web application** built using **React**.  
 It works seamlessly with the CloudShare backend to allow users to **upload, manage, share files**, and **purchase credits securely**.
 
+## 🔗 Related Repository
+
+This frontend application works with the CloudShare backend service:
+
+➡️ **Backend Repository:**  
+[https://github.com/lalit2506verma/cloudShare-backend](https://github.com/lalit2506verma/cloudShare-backend)
+
 ---
 
 ## 🚀 Features
