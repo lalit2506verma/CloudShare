@@ -1,16 +1,62 @@
-# React + Vite
+# ☁️ CloudShare-frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CloudShare Frontend is a **modern, responsive file-sharing web application** built using **React**.  
+It works seamlessly with the CloudShare backend to allow users to **upload, manage, share files**, and **purchase credits securely**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- 🔐 JWT-based Authentication
+- 📁 Secure File Upload & Download
+- 💳 Credit-based Upload System (Razorpay)
+- 🔗 File Sharing with Access Control
+- 📊 User Dashboard
+- ⚡ Axios with Interceptors
+- 🎨 Responsive & Clean UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🖼️ Application Screenshots
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔐 Authentication
+![Login](screenshots/login.png)
+
+### 📊 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 📁 File Upload & Management
+| Upload Files | My Files |
+|-------------|----------|
+| ![](screenshots/upload.png) | ![](screenshots/myFilesList.png) |
+
+### 💳 Credit & Payment
+![Payment](screenshots/payment.png)
+
+### 🔗 File Sharing
+![Share Dialog](screenshots/file-share.png)
+
+---
+
+## 🛠️ Tech Stack
+
+- **React**
+- **JavaScript (ES6+)**
+- **HTML5**
+- **CSS3**
+- **Axios**
+- **JWT Authentication**
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+ ├── components     # Reusable UI components
+ ├── pages          # Application pages
+ ├── services       # API layer (Axios)
+ ├── contexts       # Auth & global state
+ ├── assets         # Images & icons
+ ├── utils          # Helper functions
+ └── App.js         # App entry point
